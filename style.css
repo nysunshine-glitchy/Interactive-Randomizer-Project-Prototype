@@ -1,8 +1,36 @@
 html, body {
   margin: 0;
   padding: 0;
+  background-color: rgb(175,164,175);
+  color: black;
+  margin-bottom: 50px;
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 canvas {
+   margin: auto;
   display: block;
+  border: 3px solid black;
+}
+p{
+  font-size: 16px;
+}
+
+h1{
+  font-size: 50px;
+  text-align: center;
+}
+
+h1, h2, h4{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+h2{
+  font-size: 25px;
+}
+
+h4{
+  font-size: 20px;
 }
