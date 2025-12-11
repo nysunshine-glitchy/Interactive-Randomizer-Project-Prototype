@@ -105,7 +105,7 @@ function menu() {
   fill(255);
   stroke(61, 184, 59);
   strokeWeight(5);
-  text("Quack n Fish", 40, 340);
+  text("Fish n' Chill", 40, 340);
   textSize(20);
   text("press Space to play", 100, 400);
 
@@ -216,3 +216,4 @@ function mousePressed() {
     }
   }
 }
+
