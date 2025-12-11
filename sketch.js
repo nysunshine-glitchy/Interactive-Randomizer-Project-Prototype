@@ -26,7 +26,7 @@ let currentRow = 0;
 let x = 0;
 let y = 0;
 let vx = 2;
-let speed = 5;
+let speed = (2, 5);
 
 //gameplay elements
 let score;
@@ -74,13 +74,13 @@ function setup() {
   rows = floor(sheet.height / FH);
 
   // create a few random swimmers
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 10; i++) {
     let img = random(imgs);
     let x = random(width);
-    let y = random(400, height - 100); // so they don't spawn below the screen or above 400
-    let r = 20;
-    let speed = random(1, 10); //spawnn with a random speed
-    swimmers.push({ img, x, y, speed });
+    let y = random(400, height - 100);
+    let r = 40;
+    let speed = random(1, 10);
+    swimmers.push({ img, x, y, speed, r });
   }
 }
 
@@ -134,7 +134,7 @@ function game() {
   textFont(myfont);
   strokeWeight(1);
   textSize(32);
-  text("Fish:" + catchCount, 420, 30);
+  text("Fishies: " + catchCount, 420, 30);
   pop();
 
   //duck shritesheet parameters for using correct rows and columns
@@ -180,52 +180,39 @@ function game() {
 
   //don't go past top or into water
   if (y > 75) {
-    y = -1;
+    y = -0.2;
   }
   if (y < -90) {
-    y = +1;
+    y = +0.2;
   }
   pop();
   console.log(mouseX, mouseY);
 
-  // update + draw each swimmer
+  //draw swimmers
   for (let s of swimmers) {
-    image(s.img, s.x, s.y, 100, 100, s.r * 2);
-    //image(s.img, s.x, s.y, s.r *r);
-    s.x += random(2, 2); // swim across x axis
-    s.y += random(-1, 1); //
-    // reset when off screen
+    // draw using radius
+    image(s.img, s.x, s.y, s.r * 2, s.r * 2);
+
+    s.x += random(2, 2);
+    s.y += random(-1, 1);
+
     if (s.x > width) {
-      s.x = -80; // wrap around
+      s.x = -80;
       s.y = random(400, height - 100);
-      s.img = random(imgs); // choose new random image
-    }
-    if (
-      //mouseX >= s.x - 100 &&
-      //mouseX <= s.x + 100 &&
-      //mouseY >= s.y + 100 &&
-      //mouseY <= s.y - 100 &&
-      mouseIsPressed == true
-    ) {
-      s.splice(imgs, 1); 
-      console.log("fish caught");
-      //ref says use array.splice instead. would have tried s.splice otherwise
+      s.img = random(imgs);
     }
   }
 }
 
-//optional: press mouse to get a new random image
 function mousePressed() {
-  // loop backwards so splicing works safely
   for (let i = swimmers.length - 1; i >= 0; i--) {
     let s = swimmers[i];
     let d = dist(mouseX, mouseY, s.x, s.y);
     if (d < s.r) {
-      // remove this item from the array
       swimmers.splice(i, 1);
+      catchCount++;
+      //swimmers.length //need to figure out a way to add more as you catch and a timer, maybe redo indexes or maybe fish index = 0 true, then reset mechanic
+      console.log("fish caught");
     }
   }
 }
-
-// press 1..2 to pick a row; A/D to change speed (optional)
-function keyPressed() {}
